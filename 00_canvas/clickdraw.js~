@@ -1,0 +1,2 @@
+var c =""
+var ctx=c.getContext("2d")
