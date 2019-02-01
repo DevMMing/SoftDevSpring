@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> UwU </title>
+	</head>
+
+	<!--The style sheet tag lets us clarify the properties of the canvas object with ID 'slate' -->
+	<style>
+		#slate { border: 1px solid black }
+	</style>
+
+	<h1>Ciao mondo</h1>
+	<h2>Demo</h2>
+
+	<h3 id="status"></h3>
+	<!-- Create a div to store the canvas object, and have fallback text in case it cannot show -->
+	<div>
+		<canvas height="600" width="600" id="slate">
+			fallback text!
+		</canvas>
+	</div>
+
+	<!-- Lists the buttons that give the user the option to toggle between dot and rect mode, and to clear the canvas-->
+	<input id="draw" type="button" value="Toggle Draw Mode"></input>
+	<input id="clear" type="button" value="Clear Canvas"></input>
+
+	<!-- Gives user options to control size of rect and dot -->
+	<br>
+	Rectangle Height: <input id="rect_height" type="range" min="1" max="50" value="25" class="slider"></input> <output id="display_height"></output>
+	<br>
+	Rectangle Length: <input id="rect_length" type="range" min="1" max="50" value="25" class="slider"></input> <output id="display_length"></output>
+
+	<br>
+	Dot Radius: <input id="radius" type="range" min="1" max="20" value="10" class="slider"></input> <output id="display_radius"></output>
+
+	<!-- give location of the javascript file to look at -->
+	<script src='clickdraw.js'></script>
+</html>
