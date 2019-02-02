@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> UwU </title>
+	</head>
+
+	<!--The style sheet tag lets us clarify the properties of the canvas object with ID 'playground' -->
+	<style>
+		#playground { border: 1px solid black }
+	</style>
+
+	<h1>Ciao mondo</h1>
+	<h2>Demo</h2>
+
+	<h3 id="status"></h3>
+	<!-- Create a div to store the canvas object, and have fallback text in case it cannot show -->
+	<div>
+		<canvas height="600" width="600" id="playground">
+			fallback text!
+		</canvas>
+	</div>
+
+	<!-- Lists the buttons that give the user the option to toggle between dot and rect mode, and to clear the canvas-->
+	<input id="clear" type="button" value="Clear Canvas"></input>
+
+	<!-- give location of the javascript file to look at -->
+	<script src='dotconn.js'></script>
+</html>
