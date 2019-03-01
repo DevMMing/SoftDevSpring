@@ -5,9 +5,9 @@
 
 import pymongo 
 
-SERVER_ADDR="206.189.227.59"
+SERVER_ADDR= "lisa.stuy.edu" #"206.189.227.59"
 connection = pymongo.MongoClient(SERVER_ADDR)
 db = connection.test
 collection = db.restaurants
-
+print(collection.find({"borough": "Brooklyn"}))
 
