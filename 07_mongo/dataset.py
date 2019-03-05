@@ -15,18 +15,26 @@ db = connection.test
 collection = db.prize
 
 def find_year(year):
-    return list(collection.find_one({"prizes.year", year}))
+    return list(collection.find({"prizes.year": year}))
 
 def find_category(category):
-    return list(collection.find_one({"prizes.category", category}))
+    return list(collection.find({"prizes.category": category}))
 
 def find_year_category(year, category):
-    return list(collection.find_one({"$and": [{"prizes.year": year}, {"prizes.category": category}]}));
+    return list(collection.find({"$and": [{"prizes.year": year}, {"prizes.category": category}]}));
 
 def find_share_category(share, category):
-    return list(collection.find_one({"$and": [{"prizes.laureates.share": {"%gt": share}}, {"prizes.category": category}]}));
+    return list(collection.find({"$and": [{"prizes.laureates.share":  share}, {"prizes.category": category}]}));
 
+print("===================================================")
+print("Year:")
 print(find_year("2018"))
+print("===================================================")
+print("Category")
 print(find_category("medicine"))
-print(find__year_category("2017", "medicine"))
+print("===================================================")
+print("Year and category")
+print(find_year_category("2017", "medicine"))
+print("===================================================")
+print("Share and category")
 print(find_share_category("2", "physics"))
