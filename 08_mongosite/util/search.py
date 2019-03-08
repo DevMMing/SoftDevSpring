@@ -24,8 +24,7 @@ def result(name):
 
 def changeIp(ip):
     print("hi1")
-    with open('../data/prizes.json') as doc:
-        print(doc.read())
+    with open('data/prizes.json') as doc:
         print("hi")
         file_data = json.load(doc)
         print("hi")
