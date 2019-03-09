@@ -30,6 +30,10 @@ def changeIp(ip):
         print("hi")
         client.drop_database(prize)
         print("hi")
+        db=connection["test"]
+        print("hi")
+        collection=db["prize"]
+        print("hi")
         collection.insert_many(file_data['prizes'])
     print("hi")
     client.close()
