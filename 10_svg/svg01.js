@@ -43,7 +43,6 @@ pic.addEventListener('click', function(e)
 			c.setAttribute("fill", "red");
 			c.setAttribute("stroke", "black");
 			pic.appendChild(c);
-			a=pic.childNodes
 		}
 		//clicking on red dot
 		else if(color == "red"){
