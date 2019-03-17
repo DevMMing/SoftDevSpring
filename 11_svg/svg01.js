@@ -12,7 +12,6 @@ var moving=false;
 var requestID;
 //size of dot
 const radius = 25;
-
 //gets button with id "clear" and runs the following function when clicked
 clear.addEventListener('click', function(e)
 	{
@@ -34,24 +33,28 @@ function random(x)
 {
 	return Math.floor(Math.random()*x);
 }
+//move each dot separately
 var move_all = function(){
 	window.cancelAnimationFrame(requestID);
 	var children=pic.children;
-	var vel=new Array(children.length);
+	var size=children.length;
+	var w = pic.getAttribute('width');
+	var h = pic.getAttribute('height');
+	var vel=new Array(size);
 	vel.fill([1,1]);
 	var animate = function(){
         console.log(vel);
-		for(var i=0;i<children.length;i++){
+		for(var i=0;i<size;i++){
 			circX=Number(children[i].getAttribute("cx"));
 			circY=Number(children[i].getAttribute("cy"));
 			console.log("this is " +circX);
 			console.log("this is "+circY);
         // touch top or bot
-        if ( circX + vel[i][1]-radius< 0 || circX +vel[i][1]+radius> Number(pic.getAttribute("width")) ){
+        if ( circX + vel[i][1]-radius< 0 || circX +vel[i][1]+radius> w ){
             vel[i][0] *= -1;
         }
         // touch sides
-        if ( circY + vel[i][1]-radius< 0 || circY + vel[i][1]+radius> Number(pic.getAttribute("height")) ){
+        if ( circY + vel[i][1]-radius< 0 || circY + vel[i][1]+radius> h ){
             vel[i][1] *= -1;
         }
 		circX+=vel[i][0];
@@ -63,38 +66,39 @@ var move_all = function(){
     };		
 	animate();
 };
+//move dots with invisible links aka frame
 var move_each = function() {
     window.cancelAnimationFrame(requestID)
-    var w = pic.getAttribute('width')
-    var h = pic.getAttribute('height')
-    var elems = pic.children
-    var size = Number(elems[0].getAttribute('r'))
-    var vel = new Array(elems.length)
-    var arrX = new Array(elems.length)
-    var arrY = new Array(elems.length)
-    for (i = 0; i < elems.length; i++) {
+	var children=pic.children;
+	var size=children.length;
+	var w = pic.getAttribute('width');
+	var h = pic.getAttribute('height');
+    var vel = new Array(size)
+    var arrX = new Array(size)
+    var arrY = new Array(size)
+    for (i = 0; i < size; i++) {
         vel[i] = [1,1]
-        arrX[i] = Number(elems[i].getAttribute('cx'))
-        arrY[i] = Number(elems[i].getAttribute('cy'))
+        arrX[i] = Number(children[i].getAttribute('cx'))
+        arrY[i] = Number(children[i].getAttribute('cy'))
     }
     var anim = function() {
-        for (i = 0; i < elems.length; i++) {
-            elems = pic.children
-            // console.log(elems)
+        for (i = 0; i < size; i++) {
+            children = pic.children
+            // console.log(children)
             var replacer = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-            replacer.setAttribute('fill', elems[i].getAttribute('fill'))
-            replacer.setAttribute('r', elems[i].getAttribute('r'))
-            replacer.setAttribute('stroke', elems[i].getAttribute('stroke'))
+            replacer.setAttribute('fill', children[i].getAttribute('fill'))
+            replacer.setAttribute('r', children[i].getAttribute('r'))
+            replacer.setAttribute('stroke', children[i].getAttribute('stroke'))
             replacer.setAttribute('cx', arrX[i])
             replacer.setAttribute('cy', arrY[i])
             replacer.addEventListener('click', change )
-            pic.replaceChild(replacer, elems[i])
+            pic.replaceChild(replacer, children[i])
             arrX[i] += vel[i][0]
             arrY[i] += vel[i][1]
-            if (arrX[i] + vel[i][0] + size > w || arrX[i] + vel[i][0]<= 0) {
+            if (arrX[i] + vel[i][0] + radius > w || arrX[i] + vel[i][0]<= 0) {
                 vel[i][0] *= -1
             }
-            if (arrY[i] + vel[i][1] + size > h || arrY[i] + vel[i][1]<= 0) {
+            if (arrY[i] + vel[i][1] + radius > h || arrY[i] + vel[i][1]<= 0) {
                 vel[i][1] *= -1
             }
         }
