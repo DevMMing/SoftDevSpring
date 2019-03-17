@@ -1,12 +1,14 @@
 //Matthew Ming
 //SoftDev Pd08
-//2019-03-13
-//K10 - Ask Circles [Change || Die]
+//2019-03-15
+//K11 - Ask Circles [Change || Die] ...While On the Go
 
 //Initialization
 var pic = document.getElementById("vimage");
 var clear = document.getElementById("but_clear");
 var move = document.getElementById("but_move");
+var act_move = document.getElementById("move")
+var moving=false;
 var requestID;
 //size of dot
 const radius = 25;
@@ -14,9 +16,11 @@ const radius = 25;
 //gets button with id "clear" and runs the following function when clicked
 clear.addEventListener('click', function(e)
 	{
-	while (pic.hasChildNodes()){
+	while (pic.hasChildNodes){
 		pic.removeChild(pic.lastChild);
 	}
+	    window.cancelAnimationFrame(requestID);
+		moving =false;
 	});
 
 //function to get mouse position inside the canvas
@@ -30,27 +34,27 @@ function random(x)
 {
 	return Math.floor(Math.random()*x);
 }
-var movement = function(e){
+var move_all = function(){
 	window.cancelAnimationFrame(requestID);
-	var children=pic.childNodes;
+	var children=pic.children;
 	var vel=new Array(children.length);
-	vel.fill([1,1])
+	vel.fill([1,1]);
 	var animate = function(){
-        console.log(requestID);
-		for(i=1;i<children.length;i++){
+        console.log(vel);
+		for(var i=0;i<children.length;i++){
 			circX=Number(children[i].getAttribute("cx"));
 			circY=Number(children[i].getAttribute("cy"));
 			console.log("this is " +circX);
 			console.log("this is "+circY);
         // touch top or bot
-        if ( circX -radius - 1 == 0 || circX +radius +1== Number(pic.getAttribute("width")) ){
+        if ( circX + vel[i][1]-radius< 0 || circX +vel[i][1]+radius> Number(pic.getAttribute("width")) ){
             vel[i][0] *= -1;
         }
         // touch sides
-        if ( circY - radius - 1 == 0 || circY + radius + 1== Number(pic.getAttribute("height")) ){
+        if ( circY + vel[i][1]-radius< 0 || circY + vel[i][1]+radius> Number(pic.getAttribute("height")) ){
             vel[i][1] *= -1;
         }
-		circX+=vel[i][1];
+		circX+=vel[i][0];
 		circY+=vel[i][1];
 		children[i].setAttribute("cx",circX);
 		children[i].setAttribute("cy",circY);
@@ -59,7 +63,45 @@ var movement = function(e){
     };		
 	animate();
 };
-
+var move_each = function() {
+    window.cancelAnimationFrame(requestID)
+    var w = pic.getAttribute('width')
+    var h = pic.getAttribute('height')
+    var elems = pic.children
+    var size = Number(elems[0].getAttribute('r'))
+    var vel = new Array(elems.length)
+    var arrX = new Array(elems.length)
+    var arrY = new Array(elems.length)
+    for (i = 0; i < elems.length; i++) {
+        vel[i] = [1,1]
+        arrX[i] = Number(elems[i].getAttribute('cx'))
+        arrY[i] = Number(elems[i].getAttribute('cy'))
+    }
+    var anim = function() {
+        for (i = 0; i < elems.length; i++) {
+            elems = pic.children
+            // console.log(elems)
+            var replacer = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+            replacer.setAttribute('fill', elems[i].getAttribute('fill'))
+            replacer.setAttribute('r', elems[i].getAttribute('r'))
+            replacer.setAttribute('stroke', elems[i].getAttribute('stroke'))
+            replacer.setAttribute('cx', arrX[i])
+            replacer.setAttribute('cy', arrY[i])
+            replacer.addEventListener('click', change )
+            pic.replaceChild(replacer, elems[i])
+            arrX[i] += vel[i][0]
+            arrY[i] += vel[i][1]
+            if (arrX[i] + vel[i][0] + size > w || arrX[i] + vel[i][0]<= 0) {
+                vel[i][0] *= -1
+            }
+            if (arrY[i] + vel[i][1] + size > h || arrY[i] + vel[i][1]<= 0) {
+                vel[i][1] *= -1
+            }
+        }
+        requestID = window.requestAnimationFrame(anim)
+    }
+    anim()
+}
 //clicking on "canvas"
 var create= function(e){
 	color=e.target.getAttribute("fill");
@@ -88,4 +130,21 @@ var change = function(e){
 };	
 pic.addEventListener('click', create);
 pic.addEventListener('click', change);
-move.addEventListener('click',movement)
+move.addEventListener('click',function() {
+    if (!moving) {
+        move_all();
+        moving = true;
+    }else{
+        window.cancelAnimationFrame(requestID);
+        moving = false;
+    }
+});
+act_move.addEventListener('click',function() {
+    if (!moving) {
+        move_each();
+        moving = true;
+    }else{
+        window.cancelAnimationFrame(requestID);
+        moving = false;
+    }
+});
