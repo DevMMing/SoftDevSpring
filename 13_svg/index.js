@@ -3,7 +3,7 @@ var data = [4, 8, 15, 16, 23, 42];
 var width = 420,
     barHeight = 20;
 
-var x = d3.scale.linear()
+var x = d3.scaleLinear()
     .domain([0, d3.max(data)])
     .range([0, width]);
 
