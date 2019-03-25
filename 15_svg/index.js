@@ -1,4 +1,4 @@
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
+var margin = {top: 20, right: 120, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -108,14 +108,14 @@ d3.csv("crashes.csv", function(error, data) {
 
   // draw legend colored rectangles
   legend.append("rect")
-      .attr("x", width - 18)
+      .attr("x", width +5)//- 18)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   // draw legend text
   legend.append("text")
-      .attr("x", width - 24)
+      .attr("x", width +70)//- 44)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
