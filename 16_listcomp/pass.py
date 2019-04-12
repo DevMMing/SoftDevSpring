@@ -16,7 +16,9 @@ def threshold(password):
     c=True in c
     return a==b==c
 def rating(password):
-    if threshold(password):
+    if password=="":
+        return 1
+    elif threshold(password):
         d=[True if x in SPECIAL else False for x in password]
         d=True in d
         if d:
