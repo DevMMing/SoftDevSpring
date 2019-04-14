@@ -80,6 +80,8 @@ print("--------------------")
 #7
 print("7.")
 test=[[1,2,3,4],[2,3,1,4]]
+print("original:")
+print(test)
 def transpose(matrix):
     a=[]
     for i in range(len(matrix[0])):
@@ -87,6 +89,7 @@ def transpose(matrix):
         for j in range(len(matrix)):
             a[i].append(matrix[j][i])
     return a
+print("transpose")
 print(transpose(test))
 def transpose2(matrix):
     a=[[] for i in range(len(matrix[0]))]
