@@ -1,6 +1,6 @@
 #Team Keyboard Warriors -- Matthew Ming & Stefan Tan
 #SoftDev02Pd08
-#K19 --
+#K19 -- Ready, Set, Math!
 #2019-04-16
 
 a = [1 , 2, 3]
