@@ -14,9 +14,11 @@ def freq_single(n):
 print(freq_single("the"))#Expecting 280
 print(freq_single("a"))#Expecting 121
 def freq_mult(g):
-    b=[x for x in g for y in a if y==x]
-    return len(b)
-print(freq_mult(["the","a"]))#Expecting 401
+    b=reduce(lambda i,j: i+" "+j,a)
+    #print(b)
+    c = [x for x in range(len(b)-len(g)) if b[x:x+len(g)] == g]  
+    return len(c)
+print(freq_mult("under the"))#Expecting 5
 def freq():
     z=[len([y for y in a if y==x]) for x in a]
     return a[z.index(max(z))]
