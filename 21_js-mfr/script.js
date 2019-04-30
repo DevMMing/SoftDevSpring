@@ -26,12 +26,28 @@ d3.csv("nyc.csv").then(function(data) {
    });
    //amount in eligible
    var elig_amount = filt_eligible.length;
-   
+
+   var dbnL = data.map(function(schools){
+     return schools.DBN;
+   });
+
+   var numS = dbnL.length;
+   console.log(numS);
+
+   var bOh = data.filter(function(schools){
+     return schools.black_per >=20 || schools.hispanic_per >=20 ;
+   });
+   console.log(bOh.length);
+   var numBH = bOh.length;
+
 	var a=document.getElementById("median");
 	a.innerHTML=median(total_enroll);
-	
+
 	var b = document.getElementById("percent");
 	b.innerHTML=String(100*elig_amount/filt_amount)+"%";
+
+  var b = document.getElementById("number");
+  b.innerHTML=numBH;
 });
 
 function median(values){
